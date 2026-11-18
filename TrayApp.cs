@@ -28,13 +28,15 @@ sealed class TrayApp : ApplicationContext
         _startup.Click += (_, _) => ToggleStartup();
 
         var menu = new ContextMenuStrip();
+        menu.Items.Add(new ToolStripMenuItem($"TypeClip {VersionText}") { Enabled = false });
+        menu.Items.Add(new ToolStripSeparator());
         menu.Items.Add(_toggle);
         menu.Items.Add(_startup);
         menu.Items.Add("Open config", null, (_, _) => OpenConfig());
         menu.Items.Add(new ToolStripSeparator());
         menu.Items.Add("Exit", null, (_, _) => ExitApp());
 
-        _icon = new NotifyIcon { Icon = _iconOn, Text = "TypeClip", ContextMenuStrip = menu, Visible = true };
+        _icon = new NotifyIcon { Icon = _iconOn, Text = $"TypeClip {VersionText}", ContextMenuStrip = menu, Visible = true };
 
         Config.Error += msg => _ui.BeginInvoke(() => Balloon(msg));
         _hook = new KeyboardHook();
@@ -58,6 +60,9 @@ sealed class TrayApp : ApplicationContext
         _hookTimer.Start();
     }
 
+    static string VersionText { get; } =
+        (Assembly.GetExecutingAssembly().GetName().Version ?? new Version(1, 0, 0)).ToString(3);
+
     static Icon LoadIcon(string resource)
     {
         using var s = Assembly.GetExecutingAssembly().GetManifestResourceStream(resource);
@@ -69,7 +74,7 @@ sealed class TrayApp : ApplicationContext
         _hook.Enabled = enabled;
         _toggle.Text = enabled ? "Disable" : "Enable";
         _icon.Icon = enabled ? _iconOn : _iconOff;
-        _icon.Text = enabled ? "TypeClip" : "TypeClip (disabled)";
+        _icon.Text = enabled ? $"TypeClip {VersionText}" : $"TypeClip {VersionText} (disabled)";
         if (!enabled) _typeCts?.Cancel(); // Disable also aborts typing in progress
     }
 

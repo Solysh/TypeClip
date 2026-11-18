@@ -9,6 +9,7 @@
     <AssemblyName>TypeClip</AssemblyName>
     <RootNamespace>TypeClip</RootNamespace>
     <ApplicationHighDpiMode>SystemAware</ApplicationHighDpiMode>
+    <Version>1.0.0</Version>
     <ApplicationIcon>Assets\typeclip.ico</ApplicationIcon>
 
     <!-- Single self-contained exe -->
