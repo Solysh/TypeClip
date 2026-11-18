@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <IsPackable>false</IsPackable>
+    <RootNamespace>TypeClip.Tests</RootNamespace>
+  </PropertyGroup>
+
+  <!-- Compile the pure-logic sources directly; the app project is a self-contained WinExe, which is awkward to reference. -->
+  <ItemGroup>
+    <Compile Include="..\..\Hotkey.cs" Link="src\Hotkey.cs" />
+    <Compile Include="..\..\Native.cs" Link="src\Native.cs" />
+    <Compile Include="..\..\Typer.cs" Link="src\Typer.cs" />
+    <Compile Include="..\..\Config.cs" Link="src\Config.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
+    <PackageReference Include="xunit" Version="2.9.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2" />
+  </ItemGroup>
+
+</Project>
